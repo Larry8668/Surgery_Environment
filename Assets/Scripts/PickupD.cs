@@ -5,18 +5,19 @@ public class PickupD : MonoBehaviour
 {
     public GameObject scissors;
     private bool isGrabbing = false;
+    public InputActionReference trigger_input_action_reference;
+    float trigger_value;
 
     void Update()
     {
-        // Check if the A button is pressed
-        if (Gamepad.current != null && Gamepad.current.buttonSouth.isPressed)
+        trigger_value = trigger_input_action_reference.action.ReadValue<float>();
+        print(trigger_value);
+        if(trigger_value==1 && isGrabbing)
         {
-            if (isGrabbing && scissors != null)
-            {
-                // Set deformity's transform parent to scissors
-                transform.parent = scissors.transform;
-                Debug.Log("Deformity picked up by scissors!");
-            }
+            transform.SetParent(scissors.transform);
+        }
+        else{
+            transform.SetParent(null);
         }
     }
 
